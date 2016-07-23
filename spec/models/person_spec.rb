@@ -10,6 +10,10 @@ describe Person, type: :model do
     }
   end
   context 'validation' do
+    it 'accepts valis attributes' do
+      expect(Person.new(valid_attributes).valid?).to eq true
+    end
+
     it 'requires a first_name' do
       expect(
         Person.new(valid_attributes.merge(first_name: nil)).valid?
