@@ -23,3 +23,7 @@ module Birthday
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+Rails.application.configure do
+  config.autoload_paths << "#{Rails.root}/lib"
+  config.autoload_paths << "#{Rails.root}/app"
+end
