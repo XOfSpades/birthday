@@ -17,6 +17,10 @@ describe 'Present', type: :model do
   end
 
   context 'validations' do
+    it 'accepts valis attributes' do
+      expect(Present.new(valid_attributes).valid?).to eq true
+    end
+
     it 'requires a name' do
       expect(
         Present.new(valid_attributes.merge(name: nil)).valid?
