@@ -17,6 +17,10 @@ describe Party, type: :model do
   end
 
   context 'validation' do
+    it 'accepts valis attributes' do
+      expect(Party.new(valid_attributes).valid?).to eq true
+    end
+
     it 'requires a first_name' do
       expect(
         Party.new(valid_attributes.merge(person: nil)).valid?
