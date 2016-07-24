@@ -10,3 +10,11 @@ finns_party = Party.create(
   person: finn
 )
 
+WishListItem.create(
+  name: 'Lego Vulkan-Forschungstruck 60121',
+  img_url: 'http://cache.lego.com/r/catalogs/-/media/catalogs/products/city/volcano%20explorers/lego_60121_web_pri_1488.jpg?l.r2=-2065780416',
+  location: 'toysRus',
+  price: 19.99,
+  person: finn
+)
+

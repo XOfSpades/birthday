@@ -1,2 +1,10 @@
-<h1>Party#show</h1>
-<p>Find me in app/views/party/show.html.erb</p>
+<h1> <%= @party.title %> </h1>
+<h2> Meine Wunschliste </h2>
+<% @party.wish_list.each.with_index do |wish, i| %>
+  <div class="wish_container <%= i > 0 ? 'further-wish' : '' %>">
+    <h3> <%= wish.name %> </h3>
+    <img class="wish--image" src=<%= wish.img_url %> />
+    <p> Info: <%= wish.price.to_s.split('.').join(',') %> € bei <%= wish.location %></p>
+  </div>
+<% end %>
+
