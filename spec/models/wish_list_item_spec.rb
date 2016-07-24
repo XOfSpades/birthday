@@ -3,6 +3,7 @@ require 'rails_helper'
 describe WishListItem, type: :model do
   let(:user) do
     User.create(
+      password: 'foobarbaz',
       first_name: 'Hugo',
       last_name: 'Hase',
       email: 'hugo@hase.de'

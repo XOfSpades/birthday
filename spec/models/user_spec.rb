@@ -3,6 +3,7 @@ require 'rails_helper'
 describe User, type: :model do
   let(:valid_attributes) do
     {
+      password: 'foobarbaz',
       first_name: 'Hugo',
       last_name: 'Hase',
       email: 'foo@bar.de',

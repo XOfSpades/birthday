@@ -3,6 +3,7 @@ require 'rails_helper'
 describe Guest, type: :model do
   let(:user) do
     User.create(
+      password: 'foobarbaz',
       email: 'foo@bar.baz',
       first_name: 'Esmeralda',
       last_name: 'Densivilla'
@@ -10,6 +11,7 @@ describe Guest, type: :model do
   end
   let(:inviter) do
     User.create(
+      password: 'foobarbaz',
       email: 'hugo@hase.de',
       first_name: 'Hugo',
       last_name: 'Hase'

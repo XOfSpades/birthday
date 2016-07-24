@@ -3,7 +3,10 @@ require 'rails_helper'
 describe UserController, type: :controller do
   let(:valid_attributes) do
     {
-      first_name: 'Hugo', last_name: 'Hase', email: 'hugo@hase.de'
+      password: 'foobarbaz',
+      first_name: 'Hugo',
+      last_name: 'Hase',
+      email: 'hugo@hase.de'
     }
   end
 

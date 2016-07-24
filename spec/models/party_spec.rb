@@ -3,6 +3,7 @@ require 'rails_helper'
 describe Party, type: :model do
   let(:user) do
     User.create(
+      password: 'foobarbaz',
       first_name: 'Hugo',
       last_name: 'Hase',
       email: 'hugo@hase.de'
@@ -44,6 +45,7 @@ describe Party, type: :model do
   describe '#wish_list' do
     let(:other_user) do
       User.create(
+        password: 'foobarbaz',
         first_name: 'Imgo',
         last_name: 'Igel',
         email: 'ingo@igel.de'

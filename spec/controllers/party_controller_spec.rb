@@ -2,7 +2,12 @@ require 'rails_helper'
 
 describe PartyController, type: :controller do
   let(:user) do
-    User.create(first_name: 'Hugo', last_name: 'Hase', email: 'hugo@hase.de')
+    User.create(
+      password: 'foobarbaz',
+      first_name: 'Hugo',
+      last_name: 'Hase',
+      email: 'hugo@hase.de'
+    )
   end
   let(:valid_attributes) do
     {
@@ -26,7 +31,11 @@ describe PartyController, type: :controller do
       parties << Party.create(
         valid_attributes.merge(date: Date.new(2016, 9, 27)))
       other_user = User.create(
-        first_name: 'Ingo', last_name: 'Igel', email: 'ingo@igel.de')
+        password: 'foobarbaz',
+        first_name: 'Ingo',
+        last_name: 'Igel',
+        email: 'ingo@igel.de'
+      )
       Party.create valid_attributes.merge(user: other_user)
       get :index, user_id: user.id
       assert_equal parties, assigns(:parties)
