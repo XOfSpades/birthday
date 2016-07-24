@@ -39,7 +39,7 @@ describe PartyController, type: :controller do
         email: 'ingo@igel.de'
       )
       Party.create valid_attributes.merge(user: other_user)
-      get :index, user_id: user.id
+      get :index, params: { user_id: user.id }
       assert_equal parties, assigns(:parties)
       assert_template 'party/index'
     end
