@@ -26,5 +26,5 @@ end
 Rails.application.configure do
   config.autoload_paths << "#{Rails.root}/lib"
   config.autoload_paths << "#{Rails.root}/app"
-  config.i18n.default_locale = :de
+  #config.i18n.default_locale = :de
 end
