@@ -14,7 +14,6 @@ describe Party, type: :model do
       date: Date.new(2016, 8, 6),
       title: 'The big birthday party',
       person: person
-
     }
   end
 
@@ -39,6 +38,50 @@ describe Party, type: :model do
       expect(
         Party.new(valid_attributes.merge(title: nil)).valid?
       ).to eq false
+    end
+  end
+
+  describe '#wish_list' do
+    let(:other_person) do
+      Person.create(
+        first_name: 'Imgo',
+        last_name: 'Igel',
+        email: 'ingo@igel.de'
+      )
+    end
+    let(:wish_lists) do
+      [
+        WishListItem.create(
+          name: 'Lego Vulcan Truck',
+          location: 'Rossmann Rösrath',
+          price: 17.99,
+          img_url: 'www.lego.com/img/vulcan_truck_61073',
+          person: person
+        ),
+        WishListItem.create(
+          name: 'Lego Vulcan Station',
+          location: 'ToysRus',
+          price: 89.99,
+          img_url: 'www.lego.com/img/vulcan_station_61075',
+          person: person
+        ),
+        WishListItem.create(
+          name: 'Lego Creator Red creatures',
+          location: 'ToysRus',
+          price: 14.99,
+          img_url: 'www.lego.com/img/red_creatures_61075',
+          person: other_person
+        )
+      ]
+    end
+
+    before { ActiveRecord::Base.transaction { wish_lists.each(&:save!) } }
+
+    it 'returns the right wish list' do
+      wish_list = Party.create(valid_attributes).wish_list
+      expect(wish_list.size).to eq 2
+      expect(wish_list).to include(wish_lists.first)
+      expect(wish_list).to include(wish_lists.second)
     end
   end
 end
