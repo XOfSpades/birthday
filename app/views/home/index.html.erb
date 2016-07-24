@@ -1,11 +1,9 @@
 <h1>Home</h1>
 
-<div>
-  <a href= <%="/users/sign_in" %> >
-    Einloggen
-  </a>
-  <br/>
-  <a href= <%="/users/sign_up" %> >
-    Registrieren
-  </a>
-</div>
+<% if user_signed_in? %>
+  <%= link_to user_path current_user do %>
+    <div>
+      Dein Profil
+    </div>
+  <% end %>
+<% end %>

@@ -1,4 +1,4 @@
-<h1>Feiern von <%= @user.first_name %> <%= @user.last_name %></h1>
+<h1><%= @user.first_name %> <%= @user.last_name %></h1>
 
 <h2>
   Zur Zeit <%= @user.parties.count == 1 ? 'ist' : 'sind' %> <%= @user.parties.count == 0 ? 'keine' : @user.parties.count %> <%= @user.parties.count == 1 ? 'Feier' : 'Feiern' %> geplant.
@@ -8,3 +8,5 @@
     <%= party.title %>
   </a>
 <% end %>
+
+<h2>Zur Zeit hast du dich bei <%= @user.on_guest_list.count == 0 ? 'keiner' : @user.on_guest_list.count %> <%= @user.on_guest_list.count == 1 ? 'Feier' : Feiern %> registriert. </h2>
