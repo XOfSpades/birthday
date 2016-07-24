@@ -1,4 +1,6 @@
 class PartyController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     Party.create(attributes.merge(user: user))
     render 'show'
