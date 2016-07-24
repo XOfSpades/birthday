@@ -1,2 +1,10 @@
-<h1>Person#show</h1>
-<p>Find me in app/views/person/show.html.erb</p>
+<h1>Feiern von <%= @person.first_name %> <%= @person.last_name %></h1>
+
+<h2>
+  Zur Zeit <%= @person.parties.count == 1 ? 'ist' : 'sind' %> <%= @person.parties.count == 0 ? 'keine' : @person.parties.count %> <%= @person.parties.count == 1 ? 'Feier' : 'Feiern' %> geplant.
+</h2>
+<% @person.parties.each do |party| %>
+  <a href= <%="/person/#{@person.id}/party/#{party.id}" %> >
+    <%= party.title %>
+  </a>
+<% end %>
