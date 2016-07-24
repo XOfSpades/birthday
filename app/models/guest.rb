@@ -1,3 +1,5 @@
 class Guest < ApplicationRecord
-  validates_presence_of :inviter_id, :user_id
+  validates_presence_of :party, :user
+  belongs_to :party
+  belongs_to :user
 end

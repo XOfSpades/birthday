@@ -17,20 +17,27 @@ describe Guest, type: :model do
       last_name: 'Hase'
     )
   end
+  let(:party) do
+    Party.create(
+      date: Date.new(2016, 8, 6),
+      title: 'The big birthday party',
+      user: inviter
+    )
+  end
   let(:valid_attributes) do
-    { inviter_id: inviter.id, user_id: user.id }
+    { party: party, user: user }
   end
 
   context 'validation' do
     it 'requires a user_id' do
       expect(
-        Guest.new(valid_attributes.merge(user_id: nil)).valid?
+        Guest.new(valid_attributes.merge(user: nil)).valid?
       ).to eq false
     end
 
     it 'requires an inviter_id' do
       expect(
-        Guest.new(valid_attributes.merge(inviter_id: nil)).valid?
+        Guest.new(valid_attributes.merge(party: nil)).valid?
       ).to eq false
     end
 
