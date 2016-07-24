@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 describe PartyController, type: :controller do
-  let(:person) do
-    Person.create(first_name: 'Hugo', last_name: 'Hase', email: 'hugo@hase.de')
+  let(:user) do
+    User.create(first_name: 'Hugo', last_name: 'Hase', email: 'hugo@hase.de')
   end
   let(:valid_attributes) do
     {
-      date: Date.new(2016, 8, 6), title: 'Birthday', person: person
+      date: Date.new(2016, 8, 6), title: 'Birthday', user: user
     }
   end
 
   describe 'POST create' do
     it 'creates a new Party record' do
       expect do
-        post :create, params: { person_id: person.id, party: valid_attributes }
+        post :create, params: { user_id: user.id, party: valid_attributes }
       end.to change { Party.count }.by(1)
       assert_template 'party/show'
     end
@@ -25,10 +25,10 @@ describe PartyController, type: :controller do
       parties << Party.create(valid_attributes)
       parties << Party.create(
         valid_attributes.merge(date: Date.new(2016, 9, 27)))
-      other_person = Person.create(
+      other_user = User.create(
         first_name: 'Ingo', last_name: 'Igel', email: 'ingo@igel.de')
-      Party.create valid_attributes.merge(person: other_person)
-      get :index, person_id: person.id
+      Party.create valid_attributes.merge(user: other_user)
+      get :index, user_id: user.id
       assert_equal parties, assigns(:parties)
       assert_template 'party/index'
     end
@@ -38,10 +38,10 @@ describe PartyController, type: :controller do
     it 'deletes a party' do
       party = Party.create valid_attributes
       expect do
-        delete :destroy, params: { person_id: person.id, id: party.id,  }
+        delete :destroy, params: { user_id: user.id, id: party.id,  }
       end.to change { Party.count }.by(-1)
       expect do
-        Party.find person.id
+        Party.find user.id
       end.to raise_error(ActiveRecord::RecordNotFound)
       assert_template 'party/index'
     end
@@ -50,7 +50,7 @@ describe PartyController, type: :controller do
   describe 'GET show' do
     it 'loads the right party' do
       party = Party.create valid_attributes
-      get :show, params: { person_id: person.id, id: party.id }
+      get :show, params: { user_id: user.id, id: party.id }
       assert_equal party, assigns(:party)
       assert_template 'party/show'
     end
@@ -61,7 +61,7 @@ describe PartyController, type: :controller do
       party = Party.create valid_attributes
       changed_attributes = { date: Date.new(2016, 9, 27), title: 'X-mas' }
       params = {
-        party: changed_attributes, id: party.id, person_id: person.id
+        party: changed_attributes, id: party.id, user_id: user.id
       }
       put :update, params: params
       party.reload

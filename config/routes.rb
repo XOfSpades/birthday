@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :person do
+  resources :user do
     resources :party
   end
 

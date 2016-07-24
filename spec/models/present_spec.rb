@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'Present', type: :model do
-  let(:person) do
-    Person.create(
+  let(:user) do
+    User.create(
       first_name: 'Hugo',
       last_name: 'Hase',
       email: 'hugo@hase.de'
@@ -12,7 +12,7 @@ describe 'Present', type: :model do
     {
       name: 'Nerf-gun 334',
       img_url: 'www.nerf.com/img/11441r23412',
-      person: person
+      user: user
     }
   end
 
@@ -33,9 +33,9 @@ describe 'Present', type: :model do
       ).to eq false
     end
 
-    it 'requires a person' do
+    it 'requires a user' do
       expect(
-        Present.new(valid_attributes.merge(person: nil)).valid?
+        Present.new(valid_attributes.merge(user: nil)).valid?
       ).to eq false
     end
 

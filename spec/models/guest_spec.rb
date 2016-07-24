@@ -1,28 +1,28 @@
 require 'rails_helper'
 
 describe Guest, type: :model do
-  let(:person) do
-    Person.create(
+  let(:user) do
+    User.create(
       email: 'foo@bar.baz',
       first_name: 'Esmeralda',
       last_name: 'Densivilla'
     )
   end
   let(:inviter) do
-    Person.create(
+    User.create(
       email: 'hugo@hase.de',
       first_name: 'Hugo',
       last_name: 'Hase'
     )
   end
   let(:valid_attributes) do
-    { inviter_id: inviter.id, person_id: person.id }
+    { inviter_id: inviter.id, user_id: user.id }
   end
 
   context 'validation' do
-    it 'requires a person_id' do
+    it 'requires a user_id' do
       expect(
-        Guest.new(valid_attributes.merge(person_id: nil)).valid?
+        Guest.new(valid_attributes.merge(user_id: nil)).valid?
       ).to eq false
     end
 

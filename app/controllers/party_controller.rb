@@ -1,6 +1,6 @@
 class PartyController < ApplicationController
   def create
-    Party.create(attributes.merge(person: person))
+    Party.create(attributes.merge(user: user))
     render 'show'
   end
 
@@ -22,7 +22,7 @@ class PartyController < ApplicationController
   end
 
   def index
-    @parties = Party.where(person_id: person.id)
+    @parties = Party.where(user_id: user.id)
   end
 
   private
@@ -31,11 +31,11 @@ class PartyController < ApplicationController
     params.require(:party).permit(:date, :title)
   end
 
-  def person
-    @person ||= Person.find(params[:person_id])
+  def user
+    @user ||= User.find(params[:user_id])
   end
 
   def party
-    @party ||= Party.where(person_id: person.id).find(params[:id])
+    @party ||= Party.where(user_id: user.id).find(params[:id])
   end
 end

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe Party, type: :model do
-  let(:person) do
-    Person.create(
+  let(:user) do
+    User.create(
       first_name: 'Hugo',
       last_name: 'Hase',
       email: 'hugo@hase.de'
@@ -13,7 +13,7 @@ describe Party, type: :model do
     {
       date: Date.new(2016, 8, 6),
       title: 'The big birthday party',
-      person: person
+      user: user
     }
   end
 
@@ -24,7 +24,7 @@ describe Party, type: :model do
 
     it 'requires a first_name' do
       expect(
-        Party.new(valid_attributes.merge(person: nil)).valid?
+        Party.new(valid_attributes.merge(user: nil)).valid?
       ).to eq false
     end
 
@@ -42,8 +42,8 @@ describe Party, type: :model do
   end
 
   describe '#wish_list' do
-    let(:other_person) do
-      Person.create(
+    let(:other_user) do
+      User.create(
         first_name: 'Imgo',
         last_name: 'Igel',
         email: 'ingo@igel.de'
@@ -56,21 +56,21 @@ describe Party, type: :model do
           location: 'Rossmann Rösrath',
           price: 17.99,
           img_url: 'www.lego.com/img/vulcan_truck_61073',
-          person: person
+          user: user
         ),
         WishListItem.create(
           name: 'Lego Vulcan Station',
           location: 'ToysRus',
           price: 89.99,
           img_url: 'www.lego.com/img/vulcan_station_61075',
-          person: person
+          user: user
         ),
         WishListItem.create(
           name: 'Lego Creator Red creatures',
           location: 'ToysRus',
           price: 14.99,
           img_url: 'www.lego.com/img/red_creatures_61075',
-          person: other_person
+          user: other_user
         )
       ]
     end

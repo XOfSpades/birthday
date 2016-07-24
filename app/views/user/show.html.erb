@@ -1,0 +1,10 @@
+<h1>Feiern von <%= @user.first_name %> <%= @user.last_name %></h1>
+
+<h2>
+  Zur Zeit <%= @user.parties.count == 1 ? 'ist' : 'sind' %> <%= @user.parties.count == 0 ? 'keine' : @user.parties.count %> <%= @user.parties.count == 1 ? 'Feier' : 'Feiern' %> geplant.
+</h2>
+<% @user.parties.each do |party| %>
+  <a href= <%="/user/#{@user.id}/party/#{party.id}" %> >
+    <%= party.title %>
+  </a>
+<% end %>

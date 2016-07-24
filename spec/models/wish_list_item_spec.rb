@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe WishListItem, type: :model do
-  let(:person) do
-    Person.create(
+  let(:user) do
+    User.create(
       first_name: 'Hugo',
       last_name: 'Hase',
       email: 'hugo@hase.de'
@@ -14,7 +14,7 @@ describe WishListItem, type: :model do
       location: 'Rossmann Rösrath',
       price: 17.99,
       img_url: 'www.lego.com/img_vulkan_truck_61073',
-      person: person
+      user: user
     }
   end
 
@@ -47,9 +47,9 @@ describe WishListItem, type: :model do
       ).to be false
     end
 
-    it 'requires a person' do
+    it 'requires a user' do
       expect(
-        WishListItem.new(valid_atributes.merge(person: nil)).valid?
+        WishListItem.new(valid_atributes.merge(user: nil)).valid?
       ).to be false
     end
   end

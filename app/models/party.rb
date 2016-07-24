@@ -1,8 +1,8 @@
 class Party < ApplicationRecord
-  validates_presence_of :person, :date, :title
-  belongs_to :person
+  validates_presence_of :user, :date, :title
+  belongs_to :user
 
   def wish_list
-    person.wish_list_items
+    user.wish_list_items
   end
 end
