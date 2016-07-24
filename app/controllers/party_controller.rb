@@ -28,7 +28,7 @@ class PartyController < ApplicationController
   private
 
   def attributes
-    params.require(:party).permit(:date)
+    params.require(:party).permit(:date, :title)
   end
 
   def person

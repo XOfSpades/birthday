@@ -6,7 +6,7 @@ describe PartyController, type: :controller do
   end
   let(:valid_attributes) do
     {
-      date: Date.new(2016, 8, 6), person: person
+      date: Date.new(2016, 8, 6), title: 'Birthday', person: person
     }
   end
 
@@ -59,7 +59,7 @@ describe PartyController, type: :controller do
   describe 'PUT update' do
     it 'updates a party record' do
       party = Party.create valid_attributes
-      changed_attributes = { date: Date.new(2016, 9, 27) }
+      changed_attributes = { date: Date.new(2016, 9, 27), title: 'X-mas' }
       params = {
         party: changed_attributes, id: party.id, person_id: person.id
       }

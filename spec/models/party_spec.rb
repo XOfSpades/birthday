@@ -12,7 +12,9 @@ describe Party, type: :model do
   let(:valid_attributes) do
     {
       date: Date.new(2016, 8, 6),
+      title: 'The big birthday party',
       person: person
+
     }
   end
 
@@ -30,6 +32,12 @@ describe Party, type: :model do
     it 'requires a last_name' do
       expect(
         Party.new(valid_attributes.merge(date: nil)).valid?
+      ).to eq false
+    end
+
+    it 'requires a title' do
+      expect(
+        Party.new(valid_attributes.merge(title: nil)).valid?
       ).to eq false
     end
   end
