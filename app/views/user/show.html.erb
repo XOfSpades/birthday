@@ -4,9 +4,25 @@
   Zur Zeit <%= @user.parties.count == 1 ? 'ist' : 'sind' %> <%= @user.parties.count == 0 ? 'keine' : @user.parties.count %> <%= @user.parties.count == 1 ? 'Feier' : 'Feiern' %> geplant.
 </h2>
 <% @user.parties.each do |party| %>
-  <a href= <%="/user/#{@user.id}/party/#{party.id}" %> >
-    <%= party.title %>
-  </a>
+  <%= link_to "#{party.title}", party_path(id: party.id) %>
 <% end %>
 
-<h2>Zur Zeit hast du dich bei <%= @user.on_guest_list.count == 0 ? 'keiner' : @user.on_guest_list.count %> <%= @user.on_guest_list.count == 1 ? 'Feier' : Feiern %> registriert. </h2>
+<h2>Zur Zeit hast du dich bei <%= @user.on_guest_list.count == 0 ? 'keiner' : @user.on_guest_list.count %> <%= @user.on_guest_list.count < 2 ? 'Feier' : 'Feiern' %> registriert. </h2>
+<% @user.on_guest_list.each do |guest_relation| %>
+  <%= link_to "Feier \"#{guest_relation.party.title}\" von #{guest_relation.party.user.full_name}", party_path(id: guest_relation.party.id) %>
+<% end %>
+
+<h2> Finde eine Feier </h2>
+<p> Suche nach Namen oder dem Motto/Titel der Feier </p>
+<%= form_tag user_path(id: current_user.id), :method => :get do %>
+  <%= text_field_tag :search, params[:search], :id => 'search_field' %>
+  <%= submit_tag "Suche", :name => nil %>
+<% end %>
+
+<ul>
+  <% @parties.each do |party| %>
+    <li>
+      <%= link_to "#{party.title} von #{party.user.full_name}", party_path(id: party.id) %>
+    </li>
+  <% end %>
+</ul>

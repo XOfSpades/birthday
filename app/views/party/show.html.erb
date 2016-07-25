@@ -1,3 +1,5 @@
+<%= link_to 'Zurück', user_path(id: current_user.id) %>
+
 <h1> <%= @party.title %> </h1>
 <h2> Meine Wunschliste </h2>
 <% @party.wish_list.each.with_index do |wish, i| %>

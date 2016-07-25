@@ -38,13 +38,17 @@ class UserController < ApplicationController
   end
 
   def parties
-    @parties ||= Party.all.select do |party|
-      party.title.include?(search_string) ||
-      party.user.full_name.include?(search_string)
-    end
+    @parties ||= if search_string && !search_string.empty?
+                   Party.all.select do |party|
+                     party.title.downcase.include?(search_string) ||
+                     party.user.full_name.downcase.include?(search_string)
+                   end
+                 else
+                   []
+                 end
   end
 
   def search_string
-    params[:search]
+    params[:search].downcase if params[:search]
   end
 end

@@ -14,6 +14,7 @@
         <% if user_signed_in? %>
           <%= link_to 'Ausloggen', destroy_user_session_path, :method => :delete, :class=>"header-elements" %>
           <%= link_to 'Account', edit_user_registration_path, :class=>"header-elements" %>
+          <%= link_to 'Profile', user_path(current_user), :class=>"header-elements" %>
         <% else %>
           <%= link_to 'Einloggen', new_user_session_path, :class=>"header-elements" %>
           <%= link_to 'Registrieren', new_user_registration_path, :class=>"header-elements" %>

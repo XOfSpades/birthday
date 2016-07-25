@@ -73,7 +73,7 @@ describe UserController, type: :controller do
         title: 'Finns Party',
         user: user
       )
-      get :show, params: { id: user.id, search: 'Kira' }
+      get :show, params: { id: user.id, search: 'kira' }
       assert_equal [party1], assigns(:parties)
     end
   end

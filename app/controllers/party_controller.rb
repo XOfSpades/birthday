@@ -38,6 +38,6 @@ class PartyController < ApplicationController
   end
 
   def party
-    @party ||= Party.where(user_id: user.id).find(params[:id])
+    @party ||= Party.find(params[:id])
   end
 end

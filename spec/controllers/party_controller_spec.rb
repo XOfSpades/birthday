@@ -49,7 +49,7 @@ describe PartyController, type: :controller do
     it 'deletes a party' do
       party = Party.create valid_attributes
       expect do
-        delete :destroy, params: { user_id: user.id, id: party.id,  }
+        delete :destroy, params: { id: party.id,  }
       end.to change { Party.count }.by(-1)
       expect do
         Party.find user.id
@@ -61,7 +61,7 @@ describe PartyController, type: :controller do
   describe 'GET show' do
     it 'loads the right party' do
       party = Party.create valid_attributes
-      get :show, params: { user_id: user.id, id: party.id }
+      get :show, params: { id: party.id }
       assert_equal party, assigns(:party)
       assert_template 'party/show'
     end
@@ -77,6 +77,7 @@ describe PartyController, type: :controller do
       put :update, params: params
       party.reload
       expect(party.date).to eq Date.new(2016, 9, 27)
+      expect(party.title).to eq 'X-mas'
       assert_template 'party/show'
     end
   end
