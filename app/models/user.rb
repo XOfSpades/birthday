@@ -7,6 +7,10 @@ class User < ApplicationRecord
   has_many :parties, class_name: '::Party'
   has_many :wish_list_items, class_name: '::WishListItem'
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def on_guest_list
     Guest.where(user_id: id)
   end

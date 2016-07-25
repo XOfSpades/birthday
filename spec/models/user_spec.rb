@@ -34,6 +34,13 @@ describe User, type: :model do
     end
   end
 
+  describe 'full_name' do
+    it 'returns the full_name' do
+      user = User.new(valid_attributes)
+      expect(user.full_name).to eq "#{user.first_name} #{user.last_name}"
+    end
+  end
+
   describe '#on_guest_list' do
     let(:user) { User.create(valid_attributes) }
     let(:inviter1) do
