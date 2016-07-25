@@ -20,6 +20,7 @@ class UserController < ApplicationController
 
   def show
     user
+    parties
   end
 
   def index
@@ -34,5 +35,16 @@ class UserController < ApplicationController
 
   def user
     @user ||= User.find(params[:id])
+  end
+
+  def parties
+    @parties ||= Party.all.select do |party|
+      party.title.include?(search_string) ||
+      party.user.full_name.include?(search_string)
+    end
+  end
+
+  def search_string
+    params[:search]
   end
 end

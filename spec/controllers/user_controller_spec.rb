@@ -10,6 +10,15 @@ describe UserController, type: :controller do
     }
   end
 
+  let(:other_valid_attributes) do
+    {
+      password: 'foobazbar',
+      first_name: 'Kira',
+      last_name: 'Katze',
+      email: 'kira@katze.de'
+    }
+  end
+
   before { expect(controller).to receive(:authenticate_user!).and_return(true) }
 
   describe 'POST create' do
@@ -49,6 +58,23 @@ describe UserController, type: :controller do
       get :show, params: { id: user.id }
       assert_equal user, assigns(:user)
       assert_template 'user/show'
+    end
+
+    it 'searches for events' do
+      user = User.create valid_attributes
+      other_user = User.create other_valid_attributes
+      party1 = Party.create(
+        date: Date.new(2016, 8, 6),
+        title: 'Kiras Party',
+        user: other_user
+      )
+      _party2 = Party.create(
+        date: Date.new(2016, 8, 7),
+        title: 'Finns Party',
+        user: user
+      )
+      get :show, params: { id: user.id, search: 'Kira' }
+      assert_equal [party1], assigns(:parties)
     end
   end
 
