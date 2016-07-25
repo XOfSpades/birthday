@@ -3,4 +3,10 @@
 
 require_relative 'config/application'
 
+if Rails.env.production?
+  task default: []
+else
+  task default: [:rspec, :bundle_audit]
+end
+
 Rails.application.load_tasks
