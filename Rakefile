@@ -4,7 +4,7 @@
 require_relative 'config/application'
 
 if Rails.env.production?
-  task default: []
+  task default: [:'db:create', :'db:migrate']
 else
   task default: [:rspec, :bundle_audit]
 end
