@@ -19,4 +19,5 @@ test: &test
 production:
   <<: *defaults
   database: birthday_test
+  password: <%= ENV['RUBY-GETTING-STARTED_DATABASE_PASSWORD'] %>
 
