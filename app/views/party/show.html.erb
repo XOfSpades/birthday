@@ -1,6 +1,23 @@
-<%= link_to 'Zurück', user_path(id: current_user.id) %>
+<% if user_signed_in? %>
+  <%= link_to 'Zurück', user_path(id: current_user.id) %>
+<% end %>
 
 <h1> <%= @party.title %> </h1>
+
+<% if user_signed_in? %>
+  <% unless current_user.on_guest_list.map(&:party_id).include?(@party.id) %>
+    <%= form_for :guest, :url => { :controller => :guest, :action => "create"}, :html => { :method => :post, } do |f| %>
+          <%= f.hidden_field :party_id, :value => @party.id, :user_id => current_user.id %>
+          <div class="actions">
+            <%= f.submit "Mich auf Gästeliste setzen" %>
+          </div>
+        <% end %>
+  <% end %>
+<% else %>
+  <h2>Info</h2>
+  <p> Um zu vermeiden, dass manche Dinge doppelt geschenkt werden, kann man ein Geschenk "reservieren". Hierzu muss sich jedoch vorab <%= link_to 'registriert', new_user_registration_path %> werden.  </p>
+<% end %>
+
 <h2> Meine Wunschliste </h2>
 <% @party.wish_list.each.with_index do |wish, i| %>
   <div class="wish_container <%= i > 0 ? 'further-wish' : '' %>">
@@ -10,26 +27,27 @@
       Info: <%= wish.price.to_s.split('.').join(',') %> € bei <%= wish.location %>
     </p>
 
-    <% unless wish.reserved %>
-      <%= form_for :wish_list_item, :url => { :controller => :wish_list_item, :action => "reserve", id: wish.id, party_id: @party.id }, :html => { :method => :put, } do |f| %>
-        <%= f.hidden_field :reserved, :value => "true" %>
-        <%= f.hidden_field :reserved, :value => "true" %>
+    <% if user_signed_in? %>
+      <% unless wish.reserved %>
+        <%= form_for :wish_list_item, :url => { :controller => :wish_list_item, :action => "reserve", id: wish.id, party_id: @party.id }, :html => { :method => :put, } do |f| %>
+          <%= f.hidden_field :reserved, :value => "true" %>
+          <%= f.hidden_field :reserved, :value => "true" %>
 
-        <div class="actions">
-          <%= f.submit "Reservieren" %>
-        </div>
+          <div class="actions">
+            <%= f.submit "Reservieren" %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%if wish.reserved %>
+        <%= form_for :wish_list_item, :url => { :controller => :wish_list_item, :action => "reserve", id: wish.id, party_id: @party.id }, :html => { :method => :put, } do |f| %>
+          <%= f.hidden_field :reserved, :value => "false" %>
+          <div class="actions">
+            <%= f.submit "Reservierung aufheben" %>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
-
-    <%if wish.reserved %>
-      <%= form_for :wish_list_item, :url => { :controller => :wish_list_item, :action => "reserve", id: wish.id, party_id: @party.id }, :html => { :method => :put, } do |f| %>
-        <%= f.hidden_field :reserved, :value => "false" %>
-        <div class="actions">
-          <%= f.submit "Reservierung aufheben" %>
-        </div>
-      <% end %>
-    <% end %>
-
   </div>
 <% end %>
 
