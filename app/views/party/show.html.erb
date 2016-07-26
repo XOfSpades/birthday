@@ -9,14 +9,27 @@
     <p>
       Info: <%= wish.price.to_s.split('.').join(',') %> € bei <%= wish.location %>
     </p>
-    <%= form_for :wish_list_items, :url => { :action => "update" }, :html => { :method => :put, } do |f| %>
-      <%= f.label 'Reservieren' %>
-      <%= f.check_box :reserved %><br />
 
-      <div class="actions">
-        <%= f.submit "Bestätigen" %>
-      </div>
+    <% unless wish.reserved %>
+      <%= form_for :wish_list_item, :url => { :controller => :wish_list_item, :action => "reserve", id: wish.id, party_id: @party.id }, :html => { :method => :put, } do |f| %>
+        <%= f.hidden_field :reserved, :value => "true" %>
+        <%= f.hidden_field :reserved, :value => "true" %>
+
+        <div class="actions">
+          <%= f.submit "Reservieren" %>
+        </div>
+      <% end %>
     <% end %>
+
+    <%if wish.reserved %>
+      <%= form_for :wish_list_item, :url => { :controller => :wish_list_item, :action => "reserve", id: wish.id, party_id: @party.id }, :html => { :method => :put, } do |f| %>
+        <%= f.hidden_field :reserved, :value => "false" %>
+        <div class="actions">
+          <%= f.submit "Reservierung aufheben" %>
+        </div>
+      <% end %>
+    <% end %>
+
   </div>
 <% end %>
 

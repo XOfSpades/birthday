@@ -2,16 +2,21 @@ class WishListItemController < ApplicationController
   before_action :authenticate_user!
 
   def reserve
-    item.update(attributes)
+    wish_list_item.update(attributes)
+    flash.notice = "#{wish_list_item.name} erfolgreich reserviert."
+    redirect_to(controller: :party, action: :show, id: params[:party_id])
   end
 
   private
 
-  def item
+  def wish_list_item
     @wish_list_item ||= WishListItem.find(params[:id])
   end
 
   def attributes
-    params.require(:wish_list_item).permit(:reserved)
+    parameters = params.require(:wish_list_item).permit(:reserved).to_h
+
+    parameters[:reserved] = ('true' == parameters[:reserved])
+    parameters
   end
 end

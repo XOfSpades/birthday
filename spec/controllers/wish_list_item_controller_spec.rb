@@ -41,7 +41,11 @@ describe WishListItemController, type: :controller do
   describe 'PUT#update' do
     it 'sets the item to reserved' do
       put :reserve,
-          params: { id: wish_list_item.id, wish_list_item: { reserved: true } }
+          params: {
+            id: wish_list_item.id,
+            party_id: party.id,
+            wish_list_item: { reserved: true }
+          }
       wish_list_item.reload
       expect(wish_list_item.reserved).to be true
     end
