@@ -6,7 +6,17 @@
   <div class="wish_container <%= i > 0 ? 'further-wish' : '' %>">
     <h3> <%= wish.name %> </h3>
     <img class="wish--image" src=<%= wish.img_url %> />
-    <p> Info: <%= wish.price.to_s.split('.').join(',') %> € bei <%= wish.location %></p>
+    <p>
+      Info: <%= wish.price.to_s.split('.').join(',') %> € bei <%= wish.location %>
+    </p>
+    <%= form_for :wish_list_items, :url => { :action => "update" }, :html => { :method => :put, } do |f| %>
+      <%= f.label 'Reservieren' %>
+      <%= f.check_box :reserved %><br />
+
+      <div class="actions">
+        <%= f.submit "Bestätigen" %>
+      </div>
+    <% end %>
   </div>
 <% end %>
 
