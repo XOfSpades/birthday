@@ -20,7 +20,7 @@
 
 <h2> Meine Wunschliste </h2>
 <% @party.wish_list.each.with_index do |wish, i| %>
-  <%if !wish.reserved || wish.reserved_by == current_user %>
+  <%if !wish.reserved || (user_signed_in? && wish.reserved_by == current_user) %>
     <div class="wish_container <%= i > 0 ? 'further-wish' : '' %>">
       <h3> <%= wish.name %> </h3>
       <img class="wish--image" src=<%= wish.img_url %> />
