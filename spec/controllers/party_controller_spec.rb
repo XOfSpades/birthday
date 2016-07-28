@@ -16,7 +16,9 @@ describe PartyController, type: :controller do
   end
 
   context 'authentication required' do
-    before { expect(controller).to receive(:authenticate_user!).and_return(true) }
+    before do
+      expect(controller).to receive(:authenticate_user!).and_return(true)
+    end
 
     describe 'POST create' do
       it 'creates a new Party record' do
