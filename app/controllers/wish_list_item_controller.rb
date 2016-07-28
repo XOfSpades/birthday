@@ -3,6 +3,7 @@ class WishListItemController < ApplicationController
 
   def reserve
     wish_list_item.update(attributes)
+    Reservation.create(user: current_user, wish_list_item: wish_list_item)
     flash.notice = "#{wish_list_item.name} erfolgreich reserviert."
     redirect_to(controller: :party, action: :show, id: params[:party_id])
   end

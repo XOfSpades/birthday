@@ -54,4 +54,20 @@ describe WishListItem, type: :model do
       ).to be false
     end
   end
+
+  describe '#reverved_by' do
+    it 'returns the user which reserved the item' do
+      wish = WishListItem.create(valid_atributes)
+      user = User.create(
+        password: 'foobarbaz',
+        first_name: 'Hugo',
+        last_name: 'Hase',
+        email: 'foo@bar.de',
+        gravatar: 'www.gravatar.com/hugo_hase'
+      )
+      reservation = Reservation.create(user: user, wish_list_item: wish)
+
+      expect(wish.reserved_by).to eq user
+    end
+  end
 end
