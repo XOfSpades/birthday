@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :party, only: [:index]
   end
   resources :party, except: [:index]
+  resources :reservation, only: [:create]
+  delete 'reservation', to: 'reservation#destroy'
   post 'guest', to: 'guest#create'
   put 'wish_list_item/:id', to: 'wish_list_item#reserve'
 
