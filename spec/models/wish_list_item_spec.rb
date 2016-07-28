@@ -70,4 +70,21 @@ describe WishListItem, type: :model do
       expect(wish.reserved_by).to eq user
     end
   end
+
+  describe '#reserved?' do
+    it 'returns true when reserved and false when not' do
+      wish = WishListItem.create(valid_atributes)
+      user = User.create(
+        password: 'foobarbaz',
+        first_name: 'Hugo',
+        last_name: 'Hase',
+        email: 'foo@bar.de',
+        gravatar: 'www.gravatar.com/hugo_hase'
+      )
+
+      expect(wish.reserved?).to be false
+      reservation = Reservation.create(user: user, wish_list_item: wish)
+      expect(wish.reserved?).to be true
+    end
+  end
 end

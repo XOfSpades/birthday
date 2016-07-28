@@ -7,4 +7,8 @@ class WishListItem < ApplicationRecord
     reservation = Reservation.find_by(wish_list_item_id: id)
     reservation.user if reservation
   end
+
+  def reserved?
+    Reservation.where(wish_list_item_id: id).any?
+  end
 end
