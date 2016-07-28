@@ -5,23 +5,27 @@
 <h1> <%= @party.title %> </h1>
 
 <% if user_signed_in? %>
-  <% unless @party.on_guest_list?(current_user) %>
+  <% if @party.on_guest_list?(current_user) %>
+
+  <% else %>
     <%= form_for :guest, :url => { :controller => :guest, :action => "create"}, :html => { :method => :post, } do |f| %>
           <%= f.hidden_field :party_id, :value => @party.id, :user_id => current_user.id %>
           <div class="actions">
             <%= f.submit "Mich auf Gästeliste setzen" %>
           </div>
           <p>
-            Wer auf der Gästeliste eingetragen ist kann Wünsche sehen und reservieren.
+            Wer auf der Gästeliste eingetragen ist kann Wünsche sehen und reservieren. Dies soll vermeiden, dass Dinge doppelt verschenkt werden.
           </p>
         <% end %>
   <% end %>
 <% else %>
   <h2>Info</h2>
-  <p> Um zu vermeiden, dass manche Dinge doppelt geschenkt werden, kann man ein Geschenk "reservieren". Hierzu muss sich jedoch vorab <%= link_to 'registriert', new_user_registration_path %> werden.  </p>
+  <p>
+    Bitte <%= link_to 'registrieren', new_user_registration_path %> Sie sich oder <%= link_to 'loggen sich ein', new_user_session_path %>. Im Anschluss können Sie der Gästeliste beirtreten und sehen die Geburtstagswünsche, welche dann reserviert werden können.
+  </p>
 <% end %>
 
-<% if @party.on_guest_list?(current_user) %>
+<% if user_signed_in? && @party.on_guest_list?(current_user) %>
   <h2> Meine Wunschliste </h2>
   <% @party.wish_list.each.with_index do |wish, i| %>
     <%if !wish.reserved? || (user_signed_in? && wish.reserved_by == current_user) %>
