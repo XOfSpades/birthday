@@ -10,6 +10,15 @@ describe Party, type: :model do
     )
   end
 
+  let(:other_user) do
+    User.create(
+      password: 'foobarbaz',
+      first_name: 'Kira',
+      last_name: 'Katze',
+      email: 'kira@katze.de'
+    )
+  end
+
   let(:valid_attributes) do
     {
       date: Date.new(2016, 8, 6),
@@ -84,6 +93,19 @@ describe Party, type: :model do
       expect(wish_list.size).to eq 2
       expect(wish_list).to include(wish_lists.first)
       expect(wish_list).to include(wish_lists.second)
+    end
+  end
+
+  describe '#on_guest_list?' do
+    it 'returns true when user is on list' do
+      party = Party.create(valid_attributes)
+      Guest.create(party: party, user: other_user)
+      expect(party.on_guest_list?(other_user)).to be true
+    end
+
+    it 'returns false when user is not on list' do
+      party = Party.create(valid_attributes)
+      expect(party.on_guest_list?(other_user)).to be false
     end
   end
 end

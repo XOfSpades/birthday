@@ -15,17 +15,24 @@ class ReservationController < ApplicationController
 
   private
 
+  def attributes
+    @attributes ||= params
+      .require(:reservation)
+      .permit(:user_id, :wish_list_item_id, :party_id)
+  end
+
   def reservation
     @reservation ||= Reservation.where(
-      user_id: current_user.id, wish_list_item_id: params[:wish_list_item_id]
+      user_id: current_user.id,
+      wish_list_item_id: attributes[:wish_list_item_id]
     ).first
   end
 
   def party
-    @party ||= Party.find(params[:party_id])
+    @party ||= Party.find(attributes[:party_id])
   end
 
   def wish_list_item
-    @wish_list_item ||= WishListItem.find(params[:wish_list_item_id])
+    @wish_list_item ||= WishListItem.find(attributes[:wish_list_item_id])
   end
 end

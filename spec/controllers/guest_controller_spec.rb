@@ -23,14 +23,17 @@ describe GuestController, type: :controller do
     )
   end
 
+  before do
+    expect(controller).to receive(:authenticate_user!).and_return(true)
+    allow(controller).to receive(:current_user).and_return(user)
+  end
+
   context 'POST#create' do
     it 'creates a new guest relation' do
       expect do
-        post :create, params: { party_id: party.id, user_id: user.id }
-      end.to change { Party.count }.by(1)
+        post :create, params: { guest: { party_id: party.id } }
+      end.to change { Guest.count }.by(1)
       assert_template 'party/show'
-
-
     end
   end
 end

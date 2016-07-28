@@ -50,7 +50,7 @@ describe ReservationController, type: :controller do
         party_id: party.id
       }
       expect do
-        post :create, params: parameters
+        post :create, params: { reservation: parameters }
       end.to change { Reservation.count }.by(1)
       reservation = Reservation.all.first
       expect(reservation.user_id).to eq user.id
@@ -71,7 +71,7 @@ describe ReservationController, type: :controller do
         wish_list_item_id: wish_list_item.id
       }
       expect do
-        delete :destroy, params: parameters
+        delete :destroy, params: { reservation: parameters }
       end.to change { Reservation.count }.by(-1)
       expect(Reservation.all).to be_empty
       assert_equal party, assigns(:party)

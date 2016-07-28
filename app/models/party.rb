@@ -5,4 +5,8 @@ class Party < ApplicationRecord
   def wish_list
     user.wish_list_items
   end
+
+  def on_guest_list?(guest)
+    Guest.where(party: id).where(user_id: guest.id).any?
+  end
 end
